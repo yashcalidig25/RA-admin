@@ -5,12 +5,16 @@ import {
   ShoppingBagIcon,
   ChatBubbleLeftRightIcon,
   ArrowLeftOnRectangleIcon,
+  UserPlusIcon,
 } from "@heroicons/react/24/outline";
+import { useAuth } from "./provider/AuthContext";
 
 export default function Sidebar() {
+  const { logout } = useAuth();
   const menuItems = [
     { id: "/", name: "Dashboard", icon: HomeIcon },
     { id: "/users", name: "Users", icon: UserGroupIcon },
+    { id: "/seller-requests", name: "Seller Requests", icon: UserPlusIcon },
     { id: "/items", name: "Items", icon: ShoppingBagIcon },
     { id: "/reviews", name: "Reviews", icon: ChatBubbleLeftRightIcon },
   ];
@@ -42,7 +46,10 @@ export default function Sidebar() {
         </ul>
       </nav>
       <div className="absolute bottom-0 w-64 p-6">
-        <button className="flex items-center text-gray-600 hover:text-gray-900">
+        <button
+          onClick={logout}
+          className="flex items-center text-gray-600 hover:text-gray-900"
+        >
           <ArrowLeftOnRectangleIcon className="w-5 h-5 mr-3" />
           Logout
         </button>

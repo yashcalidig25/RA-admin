@@ -18,7 +18,7 @@ export default function Dashboard() {
   // Simulate fetching stats
   useEffect(() => {
     // In a real app, this would be an API call
-    const fetchStats = async () => {}
+    const fetchStats = async () => {};
     setStats({
       users: { total: 245, active: 198, inactive: 47 },
       items: { total: 532, available: 423, unavailable: 109 },
@@ -79,7 +79,7 @@ export default function Dashboard() {
                   {card.title}
                 </h2>
                 <p className="text-3xl font-bold mt-2">{card.value}</p>
-                <div className="flex items-center mt-2">
+                {/* <div className="flex items-center mt-2">
                   {card.changeType === "increase" ? (
                     <ArrowUpIcon className="w-4 h-4 text-green-500 mr-1" />
                   ) : (
@@ -94,7 +94,7 @@ export default function Dashboard() {
                   >
                     {card.change}% from last month
                   </span>
-                </div>
+                </div> */}
               </div>
               <div className="p-3 rounded-full bg-blue-100">
                 <card.icon className="w-6 h-6 text-blue-600" />
