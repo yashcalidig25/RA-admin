@@ -45,7 +45,7 @@ export default function SellerRequests() {
           rejected: rejectedRequests.length,
           pending: pendingRequests.length,
         });
-        setUsers(pendingRequests);
+        setSellerRequests(pendingRequests);
       } catch (err) {
         console.error("Error fetching users:", err);
       } finally {
@@ -206,7 +206,7 @@ export default function SellerRequests() {
                       {request.name}
                     </td>
                     <td className="table-cell">{request.email}</td>
-                    <td className="table-cell">{request.phone}</td>
+                    <td className="table-cell">{request.mobileNumber}</td>
                     <td className="table-cell">
                       {formatDate(request.dateOfBirth)}
                     </td>
@@ -237,7 +237,7 @@ export default function SellerRequests() {
                       </span>
                     </td>
                     <td className="table-cell">
-                      {request.status === "pending" && (
+                      {request.isLister === "pending" && (
                         <div className="flex space-x-2">
                           <button
                             onClick={() => handleApprove(request._id)}
