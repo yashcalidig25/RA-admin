@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   EyeIcon,
@@ -18,7 +18,11 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login, user } = useAuth();
+
+  // useEffect(() => {
+  //   navigate("/");
+  // }, [user]);
 
   const handleChange = (e) => {
     const { name, value, checked } = e.target;
@@ -99,12 +103,12 @@ export default function Login() {
                 >
                   Password
                 </label>
-                <a
+                {/* <a
                   href="#forgot-password"
                   className="text-sm text-blue-600 hover:text-blue-800"
                 >
                   Forgot password?
-                </a>
+                </a> */}
               </div>
               <div className="relative">
                 <input

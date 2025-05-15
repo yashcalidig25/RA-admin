@@ -8,6 +8,7 @@ const AuthContext = createContext();
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const navigate = useNavigate();
 
   // Check if user is logged in on initial load
@@ -76,11 +77,18 @@ export function AuthProvider({ children }) {
     navigate("/login");
   };
 
+  //   useEffect(() => {
+  // const token = localStorage.getItem("adminAuthToken")
+  // if(token){
+  //   setIsAuthenticated(true)
+  // }
+  // })
+
   // Context value
   const value = {
     user,
     loading,
-    isAuthenticated: !!user,
+    isAuthenticated: user !== null,
     login,
     logout,
   };
