@@ -207,12 +207,12 @@ export default function SellerRequests() {
                     </td>
                     <td className="table-cell">{request.email}</td>
                     <td className="table-cell">{request.mobileNumber}</td>
-                    <td className="table-cell">
+                    {/* <td className="table-cell">
                       {formatDate(request.dateOfBirth)}
                     </td>
                     <td className="table-cell">
                       {formatDate(request.requestDate)}
-                    </td>
+                    </td> */}
                     <td className="table-cell">
                       <button
                         onClick={() => openDocumentModal(request)}
