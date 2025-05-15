@@ -115,7 +115,7 @@ export default function Dashboard() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="card">
+        {/* <div className="card">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-lg font-semibold">Recent Users</h2>
             <Link to="/users" className="text-sm text-blue-600 hover:underline">
@@ -170,9 +170,9 @@ export default function Dashboard() {
               </tbody>
             </table>
           </div>
-        </div>
+        </div> */}
 
-        <div className="card">
+        {/* <div className="card">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-lg font-semibold">Recent Items</h2>
             <Link to="/items" className="text-sm text-blue-600 hover:underline">
@@ -205,7 +205,7 @@ export default function Dashboard() {
               </tbody>
             </table>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

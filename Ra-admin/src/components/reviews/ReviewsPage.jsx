@@ -89,13 +89,13 @@ export default function ReviewsPage() {
     <div>
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Reviews Management</h1>
-        <button
+        {/* <button
           className="btn btn-primary flex items-center"
           onClick={handleAddReview}
         >
           <PlusIcon className="w-5 h-5 mr-1" />
           Add Review
-        </button>
+        </button> */}
       </div>
 
       <div className="card mb-6">

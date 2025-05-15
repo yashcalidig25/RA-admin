@@ -97,13 +97,13 @@ export default function ItemsPage() {
     <div>
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Items Management</h1>
-        <button
+        {/* <button
           className="btn btn-primary flex items-center"
           onClick={handleAddItem}
         >
           <PlusIcon className="w-5 h-5 mr-1" />
           Add Item
-        </button>
+        </button> */}
       </div>
 
       <div className="card mb-6">
