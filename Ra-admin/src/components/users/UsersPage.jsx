@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { PlusIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import UserForm from "./UserForm";
 import UserTable from "./UserTable";
+import axios from "axios";
 
 export default function UsersPage() {
   const [users, setUsers] = useState([]);
@@ -16,50 +17,17 @@ export default function UsersPage() {
   // Simulate fetching users
   useEffect(() => {
     // In a real app, this would be an API call
-    setTimeout(() => {
-      setUsers([
-        {
-          _id: "1",
-          name: "John Doe",
-          email: "john@example.com",
-          mobileNumber: "1234567890",
-          status: "ACTIVE",
-          userType: "USER",
-          address: "123 Main St, City",
-          profileImage: "/placeholder.svg?height=50&width=50",
-          kycStatus: "VERIFIED",
-          authType: "EMAIL",
-          likedItems: [],
-        },
-        {
-          _id: "2",
-          name: "Jane Smith",
-          email: "jane@example.com",
-          mobileNumber: "9876543210",
-          status: "ACTIVE",
-          userType: "ADMIN",
-          address: "456 Oak St, Town",
-          profileImage: "/placeholder.svg?height=50&width=50",
-          kycStatus: "VERIFIED",
-          authType: "GOOGLE",
-          likedItems: [],
-        },
-        {
-          _id: "3",
-          name: "Bob Johnson",
-          email: "bob@example.com",
-          mobileNumber: "5551234567",
-          status: "INACTIVE",
-          userType: "USER",
-          address: "789 Pine St, Village",
-          profileImage: "/placeholder.svg?height=50&width=50",
-          kycStatus: "PENDING",
-          authType: "EMAIL",
-          likedItems: [],
-        },
-      ]);
-      setIsLoading(false);
-    }, 1000);
+    const fetchUsers = async () => {
+      try {
+        const response = await axios.get("/admin/user");
+        setUsers(response.data);
+      } catch (err) {
+        console.error("Error fetching users:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchUsers();
   }, []);
 
   const handleAddUser = () => {
@@ -96,11 +64,11 @@ export default function UsersPage() {
 
   const handleDeleteUser = (userId) => {
     if (window.confirm("Are you sure you want to delete this user?")) {
-      setUsers(users.filter((user) => user._id !== userId));
+      setUsers(users?.filter((user) => user._id !== userId));
     }
   };
 
-  const filteredUsers = users.filter((user) => {
+  const filteredUsers = users?.filter((user) => {
     const matchesSearch =
       user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       user.email.toLowerCase().includes(searchTerm.toLowerCase());

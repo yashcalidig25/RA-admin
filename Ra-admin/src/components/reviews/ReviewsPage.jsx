@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { PlusIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import ReviewForm from "./ReviewForm";
 import ReviewTable from "./ReviewTable";
+import axios from "axios";
 
 export default function ReviewsPage() {
   const [reviews, setReviews] = useState([]);
@@ -15,46 +16,18 @@ export default function ReviewsPage() {
   // Simulate fetching reviews
   useEffect(() => {
     // In a real app, this would be an API call
-    setTimeout(() => {
-      setReviews([
-        {
-          _id: "1",
-          itemId: "1",
-          userId: "1",
-          rating: 5,
-          comment:
-            "Excellent laptop, worked perfectly for my needs. Would rent again!",
-          createdAt: "2023-05-15T10:30:00.000Z",
-          // Additional data for display purposes
-          itemTitle: 'MacBook Pro 16"',
-          userName: "John Doe",
-        },
-        {
-          _id: "2",
-          itemId: "2",
-          userId: "2",
-          rating: 4,
-          comment: "Great bike, but had some minor issues with the gears.",
-          createdAt: "2023-05-10T14:20:00.000Z",
-          // Additional data for display purposes
-          itemTitle: "Mountain Bike",
-          userName: "Jane Smith",
-        },
-        {
-          _id: "3",
-          itemId: "3",
-          userId: "3",
-          rating: 3,
-          comment:
-            "Camera was okay, but had some scratches that weren't mentioned in the description.",
-          createdAt: "2023-05-05T09:15:00.000Z",
-          // Additional data for display purposes
-          itemTitle: "DSLR Camera",
-          userName: "Bob Johnson",
-        },
-      ]);
-      setIsLoading(false);
-    }, 1000);
+    const fetchReviews = async () => {
+      try {
+        const response = await axios.get("/admin/reviews");
+        console.log(response.data);
+        setReviews(response.data);
+      } catch (err) {
+        console.error("Error fetching reviews:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchReviews();
   }, []);
 
   const handleAddReview = () => {
@@ -102,13 +75,14 @@ export default function ReviewsPage() {
 
   const filteredReviews = reviews.filter((review) => {
     const matchesSearch =
-      review.itemTitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      review.userName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (review.comment &&
-        review.comment.toLowerCase().includes(searchTerm.toLowerCase()));
+      review?.itemTitle?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      review?.userName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (review?.comment &&
+        review?.comment?.toLowerCase().includes(searchTerm.toLowerCase()));
 
     const matchesRating =
-      ratingFilter === "ALL" || review.rating === Number.parseInt(ratingFilter);
+      ratingFilter === "ALL" ||
+      review?.rating === Number.parseInt(ratingFilter);
 
     return matchesSearch && matchesRating;
   });

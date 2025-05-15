@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { PlusIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import ItemForm from "./ItemForm";
 import ItemTable from "./ItemTable";
+import axios from "axios";
 
 export default function ItemsPage() {
   const [items, setItems] = useState([]);
@@ -16,56 +17,17 @@ export default function ItemsPage() {
   // Simulate fetching items
   useEffect(() => {
     // In a real app, this would be an API call
-    setTimeout(() => {
-      setItems([
-        {
-          _id: "1",
-          title: 'MacBook Pro 16"',
-          description: "Latest model with M1 Pro chip, 16GB RAM, 512GB SSD",
-          category: "Electronics",
-          subCategory: "Laptops",
-          brand: "Apple",
-          model: "MacBook Pro",
-          pricePerDay: 50,
-          condition: "Excellent",
-          ownerId: "1",
-          images: ["/placeholder.svg?height=100&width=100"],
-          available: true,
-          location: "New York, NY",
-        },
-        {
-          _id: "2",
-          title: "Mountain Bike",
-          description: "Professional mountain bike, perfect for trails",
-          category: "Sports",
-          subCategory: "Bikes",
-          brand: "Trek",
-          model: "X-Caliber 8",
-          pricePerDay: 25,
-          condition: "Good",
-          ownerId: "2",
-          images: ["/placeholder.svg?height=100&width=100"],
-          available: true,
-          location: "Denver, CO",
-        },
-        {
-          _id: "3",
-          title: "DSLR Camera",
-          description: "Professional camera with multiple lenses",
-          category: "Electronics",
-          subCategory: "Cameras",
-          brand: "Canon",
-          model: "EOS 5D Mark IV",
-          pricePerDay: 35,
-          condition: "Like New",
-          ownerId: "1",
-          images: ["/placeholder.svg?height=100&width=100"],
-          available: false,
-          location: "Los Angeles, CA",
-        },
-      ]);
-      setIsLoading(false);
-    }, 1000);
+    const fetchItems = async () => {
+      try {
+        const response = await axios.get("/admin/items");
+        setItems(response.data);
+      } catch (err) {
+        console.error("Error fetching items:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchItems();
   }, []);
 
   const handleAddItem = () => {

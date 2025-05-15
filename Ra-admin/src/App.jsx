@@ -7,9 +7,12 @@ import ItemsPage from "./components/items/ItemsPage";
 import ReviewsPage from "./components/reviews/ReviewsPage";
 import NotFound from "./components/NotFound";
 import SellerRequests from "./components/seller_requests/SellerRequests";
+import axios from "axios";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  // set axios base URL
+  axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL;
 
   // Protected route component
   const ProtectedRoute = ({ children }) => {

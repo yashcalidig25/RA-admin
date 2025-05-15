@@ -7,57 +7,58 @@ import {
   ArrowUpIcon,
   ArrowDownIcon,
 } from "@heroicons/react/24/outline";
+import axios from "axios";
 
 export default function Dashboard() {
-  const [stats, setStats] = useState({
-    users: { total: 0, active: 0, inactive: 0 },
-    items: { total: 0, available: 0, unavailable: 0 },
-    reviews: { total: 0, avgRating: 0 },
-  });
+  const [stats, setStats] = useState();
 
   // Simulate fetching stats
   useEffect(() => {
     // In a real app, this would be an API call
-    const fetchStats = async () => {};
-    setStats({
-      users: { total: 245, active: 198, inactive: 47 },
-      items: { total: 532, available: 423, unavailable: 109 },
-      reviews: { total: 1245, avgRating: 4.2 },
-    });
+    const fetchStats = async () => {
+      try {
+        const response = await axios.get("/admin/stats/stats");
+        console.log(response.data);
+        setStats(response.data);
+      } catch (err) {
+        console.error("Error fetching stats:", err);
+      }
+    };
+    fetchStats();
   }, []);
 
   const statCards = [
     {
       title: "Total Users",
-      value: stats.users.total,
+      value: stats?.users?.total,
       icon: UserGroupIcon,
       change: 12,
       changeType: "increase",
       details: [
-        { label: "Active", value: stats.users.active },
-        { label: "Inactive", value: stats.users.inactive },
+        { label: "Active", value: stats?.users?.active },
+        { label: "Inactive", value: stats?.users?.inactive },
       ],
       link: "/users",
     },
     {
       title: "Total Items",
-      value: stats.items.total,
+      value: stats?.items?.total,
       icon: ShoppingBagIcon,
       change: 8,
       changeType: "increase",
       details: [
-        { label: "Available", value: stats.items.available },
-        { label: "Unavailable", value: stats.items.unavailable },
+        { label: "Available", value: stats?.items?.available },
+        { label: "Unavailable", value: stats?.items?.unavailable },
       ],
       link: "/items",
     },
     {
       title: "Total Reviews",
-      value: stats.reviews.total,
+      value: stats?.reviews?.total,
       icon: ChatBubbleLeftRightIcon,
       change: 3,
       changeType: "decrease",
-      details: [{ label: "Avg Rating", value: stats.reviews.avgRating }],
+      details: [{ label: "Avg Rating", value: stats?.reviews?.averageRating }],
       link: "/reviews",
     },
   ];

@@ -38,16 +38,16 @@ export default function ReviewTable({ reviews, onEdit, onDelete }) {
           {reviews.map((review) => (
             <tr key={review._id} className="table-row">
               <td className="table-cell font-medium text-gray-900">
-                {review.itemTitle}
+                {review?.itemId?.title}
               </td>
-              <td className="table-cell">{review.userName}</td>
+              <td className="table-cell">{review?.userId?.name}</td>
               <td className="table-cell">
                 <div className="flex">
                   {[...Array(5)].map((_, i) => (
                     <StarIcon
                       key={i}
                       className={`w-5 h-5 ${
-                        i < review.rating ? "text-yellow-400" : "text-gray-200"
+                        i < review?.rating ? "text-yellow-400" : "text-gray-200"
                       }`}
                     />
                   ))}
