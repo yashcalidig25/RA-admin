@@ -6,6 +6,7 @@ import {
   DocumentTextIcon,
   EyeIcon,
 } from "@heroicons/react/24/outline";
+import axios from "axios";
 
 export default function SellerRequests() {
   const [sellerRequests, setSellerRequests] = useState([]);
@@ -23,6 +24,7 @@ export default function SellerRequests() {
     const fetchUsers = async () => {
       try {
         const response = await axios.get("/admin/user");
+        console.log(response.data);
         // only get user with isLister is pending
         const pendingRequests = response.data.filter(
           (user) => user.isLister === "pending"
