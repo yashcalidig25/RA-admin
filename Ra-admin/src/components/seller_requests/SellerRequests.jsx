@@ -19,102 +19,38 @@ export default function SellerRequests() {
     pending: 0,
   });
 
-  // Simulate fetching seller requests
   useEffect(() => {
-    // In a real app, this would be an API call
-    setTimeout(() => {
-      const mockRequests = [
-        {
-          _id: "1",
-          name: "John Doe",
-          email: "john@example.com",
-          phone: "+91 9876543210",
-          dateOfBirth: "1990-05-15",
-          requestDate: "2023-11-10T10:30:00Z",
-          documents: [
-            { type: "ID Proof", url: "/placeholder.svg?height=600&width=800" },
-            {
-              type: "Address Proof",
-              url: "/placeholder.svg?height=600&width=800",
-            },
-          ],
-          status: "pending",
-        },
-        {
-          _id: "2",
-          name: "Jane Smith",
-          email: "jane@example.com",
-          phone: "+91 9876543211",
-          dateOfBirth: "1992-08-21",
-          requestDate: "2023-11-09T14:20:00Z",
-          documents: [
-            { type: "ID Proof", url: "/placeholder.svg?height=600&width=800" },
-            {
-              type: "Address Proof",
-              url: "/placeholder.svg?height=600&width=800",
-            },
-          ],
-          status: "pending",
-        },
-        {
-          _id: "3",
-          name: "Robert Johnson",
-          email: "robert@example.com",
-          phone: "+91 9876543212",
-          dateOfBirth: "1985-12-03",
-          requestDate: "2023-11-08T09:15:00Z",
-          documents: [
-            { type: "ID Proof", url: "/placeholder.svg?height=600&width=800" },
-            {
-              type: "Address Proof",
-              url: "/placeholder.svg?height=600&width=800",
-            },
-          ],
-          status: "pending",
-        },
-        {
-          _id: "4",
-          name: "Emily Davis",
-          email: "emily@example.com",
-          phone: "+91 9876543213",
-          dateOfBirth: "1995-03-27",
-          requestDate: "2023-11-07T16:45:00Z",
-          documents: [
-            { type: "ID Proof", url: "/placeholder.svg?height=600&width=800" },
-            {
-              type: "Address Proof",
-              url: "/placeholder.svg?height=600&width=800",
-            },
-          ],
-          status: "pending",
-        },
-        {
-          _id: "5",
-          name: "Michael Wilson",
-          email: "michael@example.com",
-          phone: "+91 9876543214",
-          dateOfBirth: "1988-07-12",
-          requestDate: "2023-11-06T11:30:00Z",
-          documents: [
-            { type: "ID Proof", url: "/placeholder.svg?height=600&width=800" },
-            {
-              type: "Address Proof",
-              url: "/placeholder.svg?height=600&width=800",
-            },
-          ],
-          status: "pending",
-        },
-      ];
-
-      setSellerRequests(mockRequests);
-      setStats({
-        total: 15,
-        approved: 8,
-        rejected: 2,
-        pending: 5,
-      });
-      setLoading(false);
-    }, 1000);
+    const fetchUsers = async () => {
+      try {
+        const response = await axios.get("/admin/user");
+        // only get user with isLister is pending
+        const pendingRequests = response.data.filter(
+          (user) => user.isLister === "pending"
+        );
+        const rejectedRequests = response.data.filter(
+          (user) => user.isLister === "rejected"
+        );
+        const approvedRequests = response.data.filter(
+          (user) => user.isLister === "true"
+        );
+        const totalRequests =
+          pendingRequests.length +
+          rejectedRequests.length +
+          approvedRequests.length;
+        setStats({
+          total: totalRequests,
+          approved: approvedRequests.length,
+          rejected: rejectedRequests.length,
+          pending: pendingRequests.length,
+        });
+        setUsers(pendingRequests);
+      } catch (err) {
+        console.error("Error fetching users:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchUsers();
   }, []);
 
   const handleApprove = (id) => {

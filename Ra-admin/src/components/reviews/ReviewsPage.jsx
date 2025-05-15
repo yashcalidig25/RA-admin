@@ -13,9 +13,7 @@ export default function ReviewsPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [ratingFilter, setRatingFilter] = useState("ALL");
 
-  // Simulate fetching reviews
   useEffect(() => {
-    // In a real app, this would be an API call
     const fetchReviews = async () => {
       try {
         const response = await axios.get("/admin/reviews");
@@ -144,7 +142,7 @@ export default function ReviewsPage() {
       )}
 
       {showForm && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
             <ReviewForm
               review={editingReview}
